@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+public class PostfixEvaluation {
+
+    static final int MAX = 100;
+    static int[] stack = new int[MAX];
+    static int top = -1;
+
+    static void push(int value) {
+        stack[++top] = value;
+    }
+
+    static int pop() {
+        return stack[top--];
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter postfix expression: ");
+        String postfix = sc.next();
+
+        for (int i = 0; i < postfix.length(); i++) {
+
+            char ch = postfix.charAt(i);
+
+            // If operand, push it
+            if (Character.isDigit(ch)) {
+                push(ch - '0');
+            }
+
+            // If operator, perform operation
+            else {
+                int b = pop();
+                int a = pop();
+                int result;
+
+                switch (ch) {
+                    case '+':
+                        result = a + b;
+                        break;
+
+                    case '-':
+                        result = a - b;
+                        break;
+
+                    case '*':
+                        result = a * b;
+                        break;
+
+                    case '/':
+                        result = a / b;
+                        break;
+
+                    default:
+                        System.out.println("Invalid operator!");
+                        return;
+                }
+
+                push(result);
+            }
+        }
+
+        System.out.println("Result = " + pop());
+
+        sc.close();
+    }
+}
