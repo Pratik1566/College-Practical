@@ -1,0 +1,161 @@
+#include <iostream>
+using namespace std;
+
+class LinkedList {
+
+public:
+
+    class Node {
+    public:
+        int value;
+        Node* next;
+
+        Node(int value) {
+            this->value = value;
+            next = nullptr;
+        }
+    };
+
+    Node* head = nullptr;
+    Node* tail = nullptr;
+    int size = 0;
+
+    void insertAtBeginning(int data) {
+
+        Node* node = new Node(data);
+
+        if (head == nullptr) {
+            head = node;
+            tail = node;
+            tail->next = head;
+        }
+        else {
+            node->next = head;
+            head = node;
+            tail->next = head;
+        }
+
+        size++;
+    }
+
+    void insertAtlast(int value) {
+
+        if (head == nullptr) {
+            insertAtBeginning(value);
+            return;
+        }
+
+        Node* node = new Node(value);
+
+        node->next = head;
+        tail->next = node;
+        tail = node;
+
+        size++;
+    }
+
+    void deleteFirst() {
+
+        if (head == nullptr) {
+            return;
+        }
+
+        if (head == tail) {
+            delete head;
+            head = nullptr;
+            tail = nullptr;
+        }
+        else {
+            Node* temp = head;
+
+            head = head->next;
+            tail->next = head;
+
+            delete temp;
+        }
+
+        size--;
+    }
+
+    void deleteLast() {
+
+        if (head == nullptr) {
+            return;
+        }
+
+        if (head == tail) {
+            delete head;
+            head = nullptr;
+            tail = nullptr;
+        }
+        else {
+
+            Node* temp = head;
+
+            while (temp->next != tail) {
+                temp = temp->next;
+            }
+
+            temp->next = head;
+
+            delete tail;
+
+            tail = temp;
+        }
+
+        size--;
+    }
+
+    void display() {
+
+        if (head == nullptr) {
+            cout << "List is Empty" << endl;
+            return;
+        }
+
+        Node* temp = head;
+
+        do {
+            cout << temp->value << " -> ";
+            temp = temp->next;
+        } while (temp != head);
+
+        cout << "Head" << endl;
+    }
+};
+
+
+int main() {
+
+    LinkedList list;
+
+    int n;
+
+    cout << "Enter number of nodes: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+
+        cout << "Enter value: ";
+
+        int value;
+        cin >> value;
+
+        list.insertAtlast(value);
+    }
+
+    cout << "Original List:" << endl;
+    list.display();
+
+    list.deleteFirst();
+
+    cout << "After Delete First:" << endl;
+    list.display();
+
+    list.deleteLast();
+
+    cout << "After Delete Last:" << endl;
+    list.display();
+
+    return 0;
+}
