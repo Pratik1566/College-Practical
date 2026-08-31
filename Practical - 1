@@ -1,10 +1,12 @@
-import java.util.Scanner;
+#include <iostream>
+#include <string>
+using namespace std;
 
-public class PostfixEvaluation {
+class PostfixEvaluation {
 
-    static final int MAX = 100;
-    static int[] stack = new int[MAX];
-    static int top = -1;
+    static const int MAX = 100;
+    static int stack[MAX];
+    static int top;
 
     static void push(int value) {
         stack[++top] = value;
@@ -14,29 +16,33 @@ public class PostfixEvaluation {
         return stack[top--];
     }
 
-    public static void main(String[] args) {
+public:
 
-        Scanner sc = new Scanner(System.in);
+    static void evaluate() {
 
-        System.out.print("Enter postfix expression: ");
-        String postfix = sc.next();
+        string postfix;
+
+        cout << "Enter postfix expression: ";
+        cin >> postfix;
 
         for (int i = 0; i < postfix.length(); i++) {
 
-            char ch = postfix.charAt(i);
+            char ch = postfix[i];
 
             // If operand, push it
-            if (Character.isDigit(ch)) {
+            if (isdigit(ch)) {
                 push(ch - '0');
             }
 
             // If operator, perform operation
             else {
+
                 int b = pop();
                 int a = pop();
                 int result;
 
                 switch (ch) {
+
                     case '+':
                         result = a + b;
                         break;
@@ -54,7 +60,7 @@ public class PostfixEvaluation {
                         break;
 
                     default:
-                        System.out.println("Invalid operator!");
+                        cout << "Invalid operator!" << endl;
                         return;
                 }
 
@@ -62,8 +68,18 @@ public class PostfixEvaluation {
             }
         }
 
-        System.out.println("Result = " + pop());
-
-        sc.close();
+        cout << "Result = " << pop() << endl;
     }
+};
+
+// Initialize static variables
+int PostfixEvaluation::stack[PostfixEvaluation::MAX];
+int PostfixEvaluation::top = -1;
+
+
+int main() {
+
+    PostfixEvaluation::evaluate();
+
+    return 0;
 }
