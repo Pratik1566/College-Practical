@@ -1,0 +1,155 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node *prev;
+    struct Node *next;
+};
+
+// Head and tail pointers
+struct Node *head = NULL;
+struct Node *tail = NULL;
+
+// Insert at beginning
+void insertAtBeginning(int data) {
+
+    struct Node *newNode;
+
+    newNode = (struct Node *)malloc(sizeof(struct Node));
+
+    newNode->data = data;
+    newNode->prev = NULL;
+    newNode->next = NULL;
+
+    if (head == NULL) {
+        head = tail = newNode;
+    }
+    else {
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    }
+
+    printf("Node inserted.\n");
+}
+
+// Delete from beginning
+void deleteFromBeginning() {
+
+    struct Node *temp;
+
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    if (head == tail) {
+        free(head);
+        head = tail = NULL;
+    }
+    else {
+        temp = head;
+        head = head->next;
+        head->prev = NULL;
+        free(temp);
+    }
+
+    printf("Node deleted.\n");
+}
+
+// Display forward
+void displayForward() {
+
+    struct Node *temp;
+
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    temp = head;
+
+    printf("Forward: ");
+
+    while (temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->next;
+    }
+
+    printf("NULL\n");
+}
+
+// Display reverse
+void displayReverse() {
+
+    struct Node *temp;
+
+    if (tail == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    temp = tail;
+
+    printf("Reverse: ");
+
+    while (temp != NULL) {
+        printf("%d <-> ", temp->data);
+        temp = temp->prev;
+    }
+
+    printf("NULL\n");
+}
+
+// Main function
+int main() {
+
+    int choice;
+    int data;
+
+    do {
+
+        printf("\n1. Insert\n");
+        printf("2. Delete\n");
+        printf("3. Display Forward\n");
+        printf("4. Display Reverse\n");
+        printf("5. Exit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+
+            case 1:
+                printf("Enter data: ");
+                scanf("%d", &data);
+
+                insertAtBeginning(data);
+                break;
+
+            case 2:
+                deleteFromBeginning();
+                break;
+
+            case 3:
+                displayForward();
+                break;
+
+            case 4:
+                displayReverse();
+                break;
+
+            case 5:
+                printf("Program exited.\n");
+                break;
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
