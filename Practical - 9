@@ -1,0 +1,63 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n, choice;
+
+    cout << "Enter the number of elements: ";
+    cin >> n;
+
+    vector<int> arr(n);
+
+    cout << "Enter the elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    cout << "\n1. Insertion Sort\n";
+    cout << "2. Display Array\n";
+    cout << "3. Exit\n";
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1: {
+            for (int i = 1; i < n; i++) {
+                int key = arr[i];
+                int j = i - 1;
+
+                while (j >= 0 && arr[j] > key) {
+                    arr[j + 1] = arr[j];
+                    j--;
+                }
+
+                arr[j + 1] = key;
+            }
+
+            cout << "Sorted array: ";
+            for (int i = 0; i < n; i++) {
+                cout << arr[i] << " ";
+            }
+            cout << endl;
+            break;
+        }
+
+        case 2:
+            cout << "Array elements: ";
+            for (int i = 0; i < n; i++) {
+                cout << arr[i] << " ";
+            }
+            cout << endl;
+            break;
+
+        case 3:
+            cout << "Exiting program..." << endl;
+            return 0;
+
+        default:
+            cout << "Invalid choice!" << endl;
+    }
+
+    return 0;
+}
